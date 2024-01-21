@@ -1,19 +1,14 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the raw data to prepare for data anlysis 
+# Author: Bella MacLean
+# Date: 21 January 2024
+# Contact: bella.maclean@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: none
 
 #### Workspace setup ####
 library(tidyverse)
 library(readr)
-
-#### Clean data ####
-raw_data <- read_csv("inputs/data/raw_data.csv")
-View(raw_data)
 
 #### Clean data ####
 raw_data <- read_csv("inputs/data/raw_data.csv")
@@ -40,4 +35,3 @@ write_csv(
   x = assault_rate_totals,
   file = "outputs/data/cleaned_data.csv"
 )
-
