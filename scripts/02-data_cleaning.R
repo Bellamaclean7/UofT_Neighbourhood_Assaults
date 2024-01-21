@@ -9,36 +9,49 @@
 
 #### Workspace setup ####
 library(tidyverse)
+library(readr)
 
 #### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+raw_data <- read_csv("inputs/data/raw_data.csv")
+View(raw_data)
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
-  mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
-  ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+# Select the specified columns
+assault_rate_data <- raw_data |>
+  select(AREA_NAME, 
+         ASSAULT_RATE_2014, ASSAULT_RATE_2015, ASSAULT_RATE_2016, 
+         ASSAULT_RATE_2017, ASSAULT_RATE_2018, ASSAULT_RATE_2019, 
+         ASSAULT_RATE_2020, ASSAULT_RATE_2021, ASSAULT_RATE_2022, 
+         ASSAULT_RATE_2023)
 
-#### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+# Filter rows for specific neighborhoods
+uoft_neighborhoods <- assault_rate_data |>
+  filter(AREA_NAME |> c("Kensington-Chinatown", "University", "Bay-Cloverhill", "The Annex"))
+
+# Adding total assault rates for two periods
+assault_rate_totals <- uoft_neighborhoods |>
+  mutate(
+    Total_Assault_2014_2018 = ASSAULT_RATE_2014 + ASSAULT_RATE_2015 + ASSAULT_RATE_2016 + ASSAULT_RATE_2017 + ASSAULT_RATE_2018,
+    Total_Assault_2019_2023 = ASSAULT_RATE_2019 + ASSAULT_RATE_2020 + ASSAULT_RATE_2021 + ASSAULT_RATE_2022 + ASSAULT_RATE_2023
+  )
+
+# View the first few rows of the modified data
+head(assault_rate_totals)
+
+# Renaming variables
+assault_rate_totals <- assault_rate_totals |>
+  rename(
+    Neighborhood = AREA_NAME,
+    Neighborhood_ID = HOOD_ID,
+    Total_Assault_2014_to_2018 = Total_Assault_2014_2018,
+    Total_Assault_2019_to_2023 = Total_Assault_2019_2023
+  )
+
+# View the first few rows of the dataset with renamed variables
+head(assault_rate_totals)
+
+# Save the cleaned assault rate data
+write_csv(
+  x = assault_rate_totals,
+  file = "outputs/data/cleaned_data.csv"
+)
+
