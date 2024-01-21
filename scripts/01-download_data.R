@@ -36,4 +36,3 @@ data <- filter(datastore_resources, row_number()==1) %>% get_resource()
 data
 
 write_csv(data, "inputs/data/raw_data.csv")
-         
