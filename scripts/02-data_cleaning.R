@@ -28,7 +28,7 @@ uoft_neighborhoods <- assault_rate_data |>
   filter(Neighborhood %in% c("Kensington-Chinatown", "University", "Bay-Cloverhill", "Annex"))
 
 # View the first few rows of the dataset with renamed variables
-head(assault_rate_totals)
+head(assault_rate_data)
 
 # Save the cleaned assault rate data
 write_csv(
