@@ -24,8 +24,9 @@ assault_rate_data <- raw_data |>
          ASSAULT_RATE_2023)
 
 # Filter rows for specific neighborhoods
+# Filter rows for specific neighborhoods
 uoft_neighborhoods <- assault_rate_data |>
-  filter(AREA_NAME |> c("Kensington-Chinatown", "University", "Bay-Cloverhill", "The Annex"))
+  filter(AREA_NAME %in% c("Kensington-Chinatown", "University", "Bay-Cloverhill", "Annex"))
 
 # Adding total assault rates for two periods
 assault_rate_totals <- uoft_neighborhoods |>
@@ -41,7 +42,6 @@ head(assault_rate_totals)
 assault_rate_totals <- assault_rate_totals |>
   rename(
     Neighborhood = AREA_NAME,
-    Neighborhood_ID = HOOD_ID,
     Total_Assault_2014_to_2018 = Total_Assault_2014_2018,
     Total_Assault_2019_to_2023 = Total_Assault_2019_2023
   )
