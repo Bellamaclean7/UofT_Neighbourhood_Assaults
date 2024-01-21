@@ -15,36 +15,22 @@ library(readr)
 raw_data <- read_csv("inputs/data/raw_data.csv")
 View(raw_data)
 
-# Select the specified columns
+#### Clean data ####
+raw_data <- read_csv("inputs/data/raw_data.csv")
+View(raw_data)
+
+# Select the specified columns and rename AREA_NAME
 assault_rate_data <- raw_data |>
   select(AREA_NAME, 
          ASSAULT_RATE_2014, ASSAULT_RATE_2015, ASSAULT_RATE_2016, 
          ASSAULT_RATE_2017, ASSAULT_RATE_2018, ASSAULT_RATE_2019, 
          ASSAULT_RATE_2020, ASSAULT_RATE_2021, ASSAULT_RATE_2022, 
-         ASSAULT_RATE_2023)
+         ASSAULT_RATE_2023) |>
+  rename(Neighborhood = AREA_NAME)
 
-# Filter rows for specific neighborhoods
 # Filter rows for specific neighborhoods
 uoft_neighborhoods <- assault_rate_data |>
-  filter(AREA_NAME %in% c("Kensington-Chinatown", "University", "Bay-Cloverhill", "Annex"))
-
-# Adding total assault rates for two periods
-assault_rate_totals <- uoft_neighborhoods |>
-  mutate(
-    Total_Assault_2014_2018 = ASSAULT_RATE_2014 + ASSAULT_RATE_2015 + ASSAULT_RATE_2016 + ASSAULT_RATE_2017 + ASSAULT_RATE_2018,
-    Total_Assault_2019_2023 = ASSAULT_RATE_2019 + ASSAULT_RATE_2020 + ASSAULT_RATE_2021 + ASSAULT_RATE_2022 + ASSAULT_RATE_2023
-  )
-
-# View the first few rows of the modified data
-head(assault_rate_totals)
-
-# Renaming variables
-assault_rate_totals <- assault_rate_totals |>
-  rename(
-    Neighborhood = AREA_NAME,
-    Total_Assault_2014_to_2018 = Total_Assault_2014_2018,
-    Total_Assault_2019_to_2023 = Total_Assault_2019_2023
-  )
+  filter(Neighborhood %in% c("Kensington-Chinatown", "University", "Bay-Cloverhill", "Annex"))
 
 # View the first few rows of the dataset with renamed variables
 head(assault_rate_totals)
