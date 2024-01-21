@@ -6,7 +6,7 @@
 # License: MIT
 # Pre-requisites: none
 
-# code taken from https://open.toronto.ca/dataset/neighbourhood-crime-rates/
+# code taken directly from https://open.toronto.ca/dataset/neighbourhood-crime-rates/
 
 #### Workspace setup ####
 install.packages("opendatatoronto")
