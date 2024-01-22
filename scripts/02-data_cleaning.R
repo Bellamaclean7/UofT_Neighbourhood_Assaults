@@ -21,7 +21,7 @@ assault_rate_data <- raw_data |>
          ASSAULT_RATE_2017, ASSAULT_RATE_2018, ASSAULT_RATE_2019, 
          ASSAULT_RATE_2020, ASSAULT_RATE_2021, ASSAULT_RATE_2022, 
          ASSAULT_RATE_2023) |>
-  rename(Neighborhood = AREA_NAME)
+  rename(Neighbourhood = AREA_NAME)
 
 # Filter rows for specific neighborhoods
 uoft_neighborhoods <- assault_rate_data |>
@@ -34,4 +34,27 @@ head(assault_rate_data)
 write_csv(
   x = assault_rate_totals,
   file = "outputs/data/cleaned_data.csv"
+)
+
+# Sum up all the assault rates per year across the four neighborhoods
+yearly_assault_totals <- uoft_neighborhoods |>
+  summarize(
+    Total_Assault_2014 = sum(ASSAULT_RATE_2014, na.rm = TRUE),
+    Total_Assault_2015 = sum(ASSAULT_RATE_2015, na.rm = TRUE),
+    Total_Assault_2016 = sum(ASSAULT_RATE_2016, na.rm = TRUE),
+    Total_Assault_2017 = sum(ASSAULT_RATE_2017, na.rm = TRUE),
+    Total_Assault_2018 = sum(ASSAULT_RATE_2018, na.rm = TRUE),
+    Total_Assault_2019 = sum(ASSAULT_RATE_2019, na.rm = TRUE),
+    Total_Assault_2020 = sum(ASSAULT_RATE_2020, na.rm = TRUE),
+    Total_Assault_2021 = sum(ASSAULT_RATE_2021, na.rm = TRUE),
+    Total_Assault_2022 = sum(ASSAULT_RATE_2022, na.rm = TRUE),
+    Total_Assault_2023 = sum(ASSAULT_RATE_2023, na.rm = TRUE)
+  )
+
+# View the total assaults per year
+head(yearly_assault_totals)
+
+write_csv(
+  x = yearly_assault_totals,
+  file = "outputs/data/analysis_data.csv"
 )
