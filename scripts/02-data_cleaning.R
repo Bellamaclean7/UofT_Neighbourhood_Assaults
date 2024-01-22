@@ -24,8 +24,8 @@ assault_rate_data <- raw_data |>
   rename(Neighbourhood = AREA_NAME)
 
 # Filter rows for specific neighborhoods
-uoft_neighborhoods <- assault_rate_data |>
-  filter(Neighborhood %in% c("Kensington-Chinatown", "University", "Bay-Cloverhill", "Annex"))
+uoft_neighbourhoods <- assault_rate_data |>
+  filter(Neighbourhood %in% c("Kensington-Chinatown", "University", "Bay-Cloverhill", "Annex"))
 
 # View the first few rows of the dataset with renamed variables
 head(assault_rate_data)
@@ -37,7 +37,7 @@ write_csv(
 )
 
 # Sum up all the assault rates per year across the four neighborhoods
-yearly_assault_totals <- uoft_neighborhoods |>
+yearly_assault_totals <- uoft_neighbourhoods |>
   summarize(
     Total_Assault_2014 = sum(ASSAULT_RATE_2014, na.rm = TRUE),
     Total_Assault_2015 = sum(ASSAULT_RATE_2015, na.rm = TRUE),
